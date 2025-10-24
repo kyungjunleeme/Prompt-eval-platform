@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prompt-hub
+  namespace: prompt-eval
+spec:
+  replicas: 2
+  selector:
+    matchLabels: { app: prompt-hub }
+  template:
+    metadata:
+      labels: { app: prompt-hub }
+    spec:
+      containers:
+      - name: api
+        image: REPLACE_REGISTRY/prompt-eval-platform-prompt-hub:REPLACE_TAG
+        ports: [{containerPort: 8080}]
+        envFrom:
+        - secretRef: { name: provider-secrets }
+        readinessProbe:
+          httpGet: { path: /healthz, port: 8080 }
+        resources:
+          requests: { cpu: "200m", memory: "256Mi" }
+          limits:   { cpu: "1", memory: "1Gi" }

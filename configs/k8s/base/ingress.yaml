@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: prompt-hub
+  namespace: prompt-eval
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+  - host: prompt-hub.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: prompt-hub
+            port:
+              number: 80

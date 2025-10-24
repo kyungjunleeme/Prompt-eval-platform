@@ -1,0 +1,3 @@
+id,input,expected,category,lang,reference_docs
+ex001,"반품 기간 알려줘","30일",policy,ko,"file://docs/policy_v1.pdf"
+ex002,"영업팀 연락처 알려줘","02-0000-0000",directory,ko,""

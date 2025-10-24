@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vllm
+  namespace: prompt-eval
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: vllm } }
+  template:
+    metadata: { labels: { app: vllm } }
+    spec:
+      containers:
+      - name: vllm
+        image: vllm/vllm-openai:latest
+        args: ["--model","meta-llama/Meta-Llama-3.1-8B-Instruct"]
+        ports: [{containerPort: 8000}]
+        resources:
+          requests: { cpu: "2", memory: "8Gi" }
+          limits: { cpu: "4", memory: "12Gi" }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vllm
+  namespace: prompt-eval
+spec:
+  selector: { app: vllm }
+  ports:
+  - name: http
+    port: 8000
+    targetPort: 8000

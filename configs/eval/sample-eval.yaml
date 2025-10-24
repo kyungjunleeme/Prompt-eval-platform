@@ -1,0 +1,8 @@
+name: sales_qa_v3_smoke_ko
+models: ["openai:gpt-4o-mini", "databricks:my-endpoint"]
+testset: configs/eval/sample_testset.csv
+prompt:
+  template: |
+    당신은 B2B 영업 어시스턴트입니다. 다음 질문에 간결하게 답하세요.
+    질문: {{question}}
+output: eval_results.parquet

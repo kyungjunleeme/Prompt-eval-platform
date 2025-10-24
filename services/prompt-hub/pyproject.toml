@@ -1,0 +1,16 @@
+[project]
+name = "prompt-hub"
+version = "0.1.0"
+requires-python = ">=3.10"
+dependencies = [
+  "fastapi",
+  "uvicorn[standard]",
+  "pydantic>=2.7",
+  "sqlalchemy>=2.0",
+  "psycopg[binary]",
+  "boto3",
+  "python-dotenv",
+]
+
+[tool.uv]
+dev-dependencies = ["pytest", "httpx", "ruff"]

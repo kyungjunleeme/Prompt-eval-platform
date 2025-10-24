@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eval-runner
+  namespace: prompt-eval
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: eval-runner }
+  template:
+    metadata:
+      labels: { app: eval-runner }
+    spec:
+      containers:
+      - name: runner
+        image: REPLACE_REGISTRY/prompt-eval-platform-eval-runner:REPLACE_TAG
+        volumeMounts:
+        - name: cfg
+          mountPath: /config
+        envFrom:
+        - secretRef: { name: provider-secrets }
+        command: ["python","/app/eval_cli.py","--config","/config/eval.yaml"]
+        resources:
+          requests: { cpu: "200m", memory: "256Mi" }
+          limits:   { cpu: "2", memory: "2Gi" }
+      volumes:
+      - name: cfg
+        configMap: { name: eval-config }

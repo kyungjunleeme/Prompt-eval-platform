@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: eval-config
+  namespace: prompt-eval
+data:
+  eval.yaml: |
+    name: k8s-smoke
+    models: ["openai:gpt-4o-mini","databricks:my-endpoint"]
+    testset: /config/sample_testset.csv
+    prompt:
+      template: |
+        당신은 B2B 영업 어시스턴트입니다. 다음 질문에 간결하게 답하세요.
+        질문: {{question}}
+    output: /tmp/eval_results.parquet
+  sample_testset.csv: |
+    id,input,expected,category,lang,reference_docs
+    ex001,"반품 기간 알려줘","30일",policy,ko,""
+    ex002,"영업팀 연락처 알려줘","02-0000-0000",directory,ko,""
